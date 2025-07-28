@@ -17,7 +17,7 @@
 
 ## Project Overview
 
-This project implements a comprehensive review system integrated with Natural Language Processing capabilities for automated sentiment analysis. The platform allows users to submit reviews for various entities (Interview reviews, Restaurant Reviews, Movie Reviews), automatically analyzes the emotional tone of the content, and maintains a real-time leaderboard ranking system based on sentiment scores.
+This project implements a comprehensive review system integrated with Natural Language Processing capabilities for automated sentiment analysis. The platform allows users to submit reviews for various entities (<span style="color:blue">Interview reviews, Restaurant Reviews, Movie Reviews, etc.</span>), automatically analyzes the emotional tone of the content, and maintains a real-time leaderboard ranking system based on sentiment scores.
 
 ### Key Features
 
