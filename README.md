@@ -2,22 +2,22 @@
 
 ## Table of Contents
 
-- [Project Overview](#project-overview)
-- [Architecture and Technology Stack](#architecture-and-technology-stack) 
-- [System Components](#system-components)
-- [Database Design](#database-design)
-- [Caching Strategy](#caching-strategy)
-- [NLP Integration](#nlp-integration)
-- [API Documentation](#api-documentation)
-- [Installation and Setup](#installation-and-setup)
-- [Configuration](#configuration)
-- [Usage Examples](#usage-examples)
-- [Performance and Scalability](#performance-and-scalability)
-- [Troubleshooting](#troubleshooting)
+- Project Overview
+- Architecture and Technology Stack
+- System Components
+- Database Design
+- Caching Strategy
+- NLP Integration
+- API Documentation
+- Installation and Setup
+- Configuration
+- Usage Examples
+- Performance and Scalability
+- Troubleshooting
 
 ## Project Overview
 
-This project implements a comprehensive review system integrated with Natural Language Processing capabilities for automated sentiment analysis. The platform allows users to submit reviews for various entities, automatically analyzes the emotional tone of the content, and maintains a real-time leaderboard ranking system based on sentiment scores.
+This project implements a comprehensive review system integrated with Natural Language Processing capabilities for automated sentiment analysis. The platform allows users to submit reviews for various entities (Interview reviews, Restaurant Reviews, Movie Reviews), automatically analyzes the emotional tone of the content, and maintains a real-time leaderboard ranking system based on sentiment scores.
 
 ### Key Features
 
@@ -30,7 +30,10 @@ This project implements a comprehensive review system integrated with Natural La
 
 ### Business Value
 
-The system transforms unstructured text reviews into actionable business intelligence by automatically categorizing sentiment as positive, negative, or neutral. This enables businesses to understan, and make data-driven decisions without manual review analysis.
+The system transforms unstructured text reviews into actionable business intelligence by automatically categorizing sentiment as positive, negative, or neutral. This enables businesses to understand and make data-driven decisions without manual review analysis.
+
+### Referred Docs
+[Developing A Cloud-Based NLP Platform for Sentiment Analysis and Opinion Mining of Social Media Data](https://ijisae.org/index.php/IJISAE/article/view/6406)
 
 ## Architecture and Technology Stack
 
@@ -52,22 +55,22 @@ The system employs a microservices architecture pattern with two primary service
 
 ### Technology Stack
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| **Primary API** | Spring Boot 3.2 | Enterprise-grade REST API framework |
-| **NLP Processing** | Python Flask | Lightweight service for ML model execution |
-| **Database** | PostgreSQL 15 | ACID-compliant relational data storage |
-| **Caching** | Redis 7 | High-performance in-memory data structure store |
-| **Containerization** | Docker & Docker Compose | Consistent deployment environments |
-| **ML Framework** | Hugging Face Transformers | State-of-the-art NLP model processing |
+| Component             | Technology                           | Purpose                                          |
+|-----------------------|--------------------------------------|--------------------------------------------------|
+| **Primary API**       | Spring Boot 3.2                      | Enterprise-grade REST API framework              |
+| **NLP Processing**    | Python Flask                         | Lightweight service for ML model execution       |
+| **Database**          | PostgreSQL 15                        | ACID-compliant relational data storage           |
+| **Caching**           | Redis 7                              | High-performance in-memory data structure store  |
+| **Containerization**  | Docker & Docker Compose              | Consistent deployment environments               |
+| **ML Framework**      | Hugging Face Transformers            | State-of-the-art NLP model processing            |
 
 ### Design Patterns
 
-**Cache-Aside Pattern**: Primary caching strategy where the application manages cache population and invalidation[1].
+**Cache-Aside Pattern**: Primary caching strategy where the application manages cache population and invalidation.
 
-**Circuit Breaker Pattern**: Prevents cascading failures between services with fallback mechanisms[1].
+**Circuit Breaker Pattern**: Prevents cascading failures between services with fallback mechanisms.
 
-**Repository Pattern**: Data access abstraction layer using Spring Data JPA[1].
+**Repository Pattern**: Data access abstraction layer using Spring Data JPA.
 
 ## System Components
 
@@ -96,25 +99,25 @@ The main API service implements a three-layer architecture:
 
 The NLP service focuses on sentiment analysis:
 
-**Model Management**: Background thread initialization to prevent cold start timeouts
-**Request Processing**: Flask-based HTTP endpoint handling
-**Sentiment Analysis**: Transformer model execution with confidence scoring
+**Model Management**: Background thread initialization to prevent cold start timeouts  
+**Request Processing**: Flask-based HTTP endpoint handling  
+**Sentiment Analysis**: Transformer model execution with confidence scoring  
 **Health Monitoring**: Service readiness and model status endpoints
 
 ### PostgreSQL Database
 
 Relational database design with normalized structure:
 
-**Entities Table**: Stores information about reviewed entities
-**Reviews Table**: Contains review text and computed sentiment data
+**Entities Table**: Stores information about reviewed entities  
+**Reviews Table**: Contains review text and computed sentiment data  
 **Relationships**: Foreign key constraints maintain data integrity
 
 ### Redis Cache
 
 High-performance caching layer:
 
-**SortedSets**: Automatic ranking maintenance with O(log N) operations
-**Real-time Updates**: Immediate leaderboard refreshes
+**SortedSets**: Automatic ranking maintenance with O(log N) operations  
+**Real-time Updates**: Immediate leaderboard refreshes  
 **Persistence**: Data durability across service restarts
 
 ## Database Design
@@ -155,7 +158,7 @@ CREATE TABLE reviews (
 
 ### Indexing Strategy
 
-Performance-optimized indexes for common query patterns[2]:
+Performance-optimized indexes for common query patterns:
 
 ```sql
 -- Leaderboard queries
@@ -172,15 +175,15 @@ CREATE INDEX idx_review_sentiment ON reviews(entity_id, sentiment_label);
 
 The leaderboard uses Redis SortedSets for automatic ranking maintenance:
 
-**Data Structure**: `ZADD restaurant:leaderboard {score} {entity_id}`
-**Operations**: Add, update, and range queries in O(log N) time complexity
-**Ranking**: `ZREVRANGE` operations for top-N queries
+**Data Structure**: `ZADD restaurant:leaderboard {score} {entity_id}`  
+**Operations**: Add, update, and range queries in O(log N) time complexity  
+**Ranking**: `ZREVRANGE` operations for top-N queries  
 **Updates**: Cache-first strategy with immediate Redis updates
 
 ### Cache Invalidation Strategy
 
-**Cache-Aside Pattern**: Application manages cache population and updates[1]
-**Write-Behind Strategy**: Update cache first, then persist to database asynchronously
+**Cache-Aside Pattern**: Application manages cache population and updates  
+**Write-Behind Strategy**: Update cache first, then persist to database asynchronously  
 **Consistency**: Eventual consistency model acceptable for leaderboard use case
 
 ## NLP Integration
@@ -189,9 +192,9 @@ The leaderboard uses Redis SortedSets for automatic ranking maintenance:
 
 The NLP service implements a sophisticated sentiment analysis workflow:
 
-**Model Loading**: Background thread initialization prevents service blocking
-**Text Processing**: Input validation and preprocessing
-**Model Execution**: Hugging Face Transformer model inference
+**Model Loading**: Background thread initialization prevents service blocking  
+**Text Processing**: Input validation and preprocessing  
+**Model Execution**: Hugging Face Transformer model inference  
 **Result Processing**: Confidence scoring and label normalization
 
 ### Model Architecture
@@ -207,9 +210,9 @@ The NLP service implements a sophisticated sentiment analysis workflow:
 
 ### Integration Pattern
 
-**Asynchronous Processing**: NLP service loads models in background threads
-**Health Monitoring**: Separate endpoints for service health and model readiness
-**Error Handling**: Graceful degradation with fallback responses
+**Asynchronous Processing**: NLP service loads models in background threads  
+**Health Monitoring**: Separate endpoints for service health and model readiness  
+**Error Handling**: Graceful degradation with fallback responses  
 **Timeout Management**: Configurable timeouts with retry logic
 
 ## API Documentation
@@ -596,7 +599,7 @@ watch -n 5 'curl -s http://localhost:8080/api/reviews/entity/1/statistics | jq'
 
 ### Performance Characteristics
 
-**API Response Times**[3]:
+**API Response Times**:
 - Entity queries:  getTopEntities(int limit) {
     return leaderboardService.getTopEntities(limit);
 }
@@ -606,9 +609,9 @@ watch -n 5 'curl -s http://localhost:8080/api/reviews/entity/1/statistics | jq'
 
 ### Common Issues and Solutions
 
-**Issue**: NLP service timeout during startup
+**Issue**: NLP service timeout during startup  
 **Solution**: Increase Docker container memory allocation and health check timeout
-```yaml
+```
 python-nlp:
   deploy:
     resources:
@@ -618,9 +621,9 @@ python-nlp:
     start_period: 180s
 ```
 
-**Issue**: Database connection failures
+**Issue**: Database connection failures  
 **Solution**: Verify PostgreSQL service status and connection parameters
-```bash
+```
 # Check database connectivity
 docker exec -it postgres_db psql -U admin -d review_system -c "SELECT 1;"
 
@@ -628,9 +631,9 @@ docker exec -it postgres_db psql -U admin -d review_system -c "SELECT 1;"
 docker-compose logs postgres
 ```
 
-**Issue**: Redis cache misses
+**Issue**: Redis cache misses  
 **Solution**: Monitor Redis memory usage and configure appropriate eviction policies
-```bash
+```
 # Check Redis memory usage
 docker exec -it redis_cache redis-cli INFO memory
 
@@ -638,9 +641,9 @@ docker exec -it redis_cache redis-cli INFO memory
 docker exec -it redis_cache redis-cli INFO stats | grep keyspace
 ```
 
-**Issue**: Slow sentiment analysis processing
+**Issue**: Slow sentiment analysis processing  
 **Solution**: Implement model caching and batch processing
-```python
+```
 # Cache frequently analyzed phrases
 @lru_cache(maxsize=1000)
 def get_cached_sentiment(text_hash):
@@ -650,7 +653,7 @@ def get_cached_sentiment(text_hash):
 ### Monitoring and Debugging
 
 **Application Logs**:
-```bash
+```
 # View service logs
 docker-compose logs -f spring-boot-api
 docker-compose logs -f python-nlp
@@ -660,7 +663,7 @@ docker-compose logs spring-boot-api | grep ERROR
 ```
 
 **Performance Monitoring**:
-```bash
+```
 # Container resource usage
 docker stats
 
@@ -670,7 +673,7 @@ docker exec -it postgres_db psql -U admin -d review_system \
 ```
 
 **Health Monitoring**:
-```bash
+```
 # Automated health checks
 while true; do
   curl -f http://localhost:8080/api/health || echo "API unhealthy"
@@ -681,8 +684,8 @@ done
 
 ### Performance Optimization
 
-**Database Query Optimization**[2]:
-```sql
+**Database Query Optimization**:
+```
 -- Analyze query performance
 EXPLAIN ANALYZE SELECT * FROM entities ORDER BY average_score DESC LIMIT 10;
 
@@ -690,9 +693,17 @@ EXPLAIN ANALYZE SELECT * FROM entities ORDER BY average_score DESC LIMIT 10;
 CREATE INDEX CONCURRENTLY idx_entity_category ON entities(category_type);
 ```
 
+**JVM Tuning**:
+```
+spring-boot-api:
+  environment:
+    - JAVA_OPTS=-Xmx2g -Xms1g -XX:+UseG1GC
+```
+
 **Redis Optimization**:
-```bash
+```
 # Configure Redis for optimal performance
 docker exec -it redis_cache redis-cli CONFIG SET maxmemory 1gb
 docker exec -it redis_cache redis-cli CONFIG SET maxmemory-policy allkeys-lru
 ```
+---
