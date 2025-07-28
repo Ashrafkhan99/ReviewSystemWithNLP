@@ -690,13 +690,6 @@ EXPLAIN ANALYZE SELECT * FROM entities ORDER BY average_score DESC LIMIT 10;
 CREATE INDEX CONCURRENTLY idx_entity_category ON entities(category_type);
 ```
 
-**JVM Tuning**:
-```yaml
-spring-boot-api:
-  environment:
-    - JAVA_OPTS=-Xmx2g -Xms1g -XX:+UseG1GC
-```
-
 **Redis Optimization**:
 ```bash
 # Configure Redis for optimal performance
