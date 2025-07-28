@@ -1,0 +1,40 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: restaurant-review-api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/restaurant_reviews}
+    username: ${SPRING_DATASOURCE_USERNAME:admin}
+    password: ${SPRING_DATASOURCE_PASSWORD:admin123}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+# Custom application properties
+app:
+  nlp:
+    service-url: ${NLP_SERVICE_URL:http://localhost:5000}
+    timeout: 300s
+  leaderboard:
+    cache-key: "restaurant:leaderboard"
+    top-limit: 50
+logging:
+  level:
+    com.example.restaurantreview: DEBUG
+    org.springframework.data.redis: DEBUG
