@@ -35,6 +35,10 @@ The system transforms unstructured text reviews into actionable business intelli
 ### Referred Docs
 [Developing A Cloud-Based NLP Platform for Sentiment Analysis and Opinion Mining of Social Media Data](https://ijisae.org/index.php/IJISAE/article/view/6406)
 
+### Demo
+https://github.com/user-attachments/assets/5f4f8a32-28d9-4cc7-9e29-b8abfa8c2470
+
+
 ## Architecture and Technology Stack
 
 ### Microservices Architecture
